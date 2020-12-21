@@ -1,7 +1,19 @@
-import { UserForm } from './views/UserForm';
-import { User } from './models/User';
+import { UserList } from './views/UserList';
+import { Collection } from './models/Collection';
+import { User, UserProps } from './models/User';
 
-const user = User.buildUser({ name: 'ZEW', age: 17 });
-const userForm = new UserForm(document.getElementById('root'), user);
+const users = new Collection(
+    'http://localhost:3000/users',
+    (json: UserProps) => {
+        return User.buildUser(json);
+    }
+);
 
-userForm.render();
+users.on('change', () => {
+    const root = document.getElementById('root');
+    if (root) {
+        new UserList(root, users).render();
+    }
+});
+
+users.fetch();
