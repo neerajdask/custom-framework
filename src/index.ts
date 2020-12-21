@@ -1,12 +1,7 @@
+import { UserForm } from './views/UserForm';
 import { User } from './models/User';
 
-const user = new User({ name: 'Alex', age: 20 });
+const user = User.buildUser({ name: 'ZEW', age: 17 });
+const userForm = new UserForm(document.getElementById('root'), user);
 
-console.log(user.get('name'));
-
-user.set({
-    name: 'Fawks',
-    age: 25,
-});
-
-console.log(user);
+userForm.render();
